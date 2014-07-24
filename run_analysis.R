@@ -1,9 +1,8 @@
 
 run_analysis <- function() {
   activityLabels <- read.table("activity_labels.txt");
-  names(activityLabels) <- c("activityid", "activityname");
+  names(activityLabels) <- c("activityId", "activityName");
   featureLabels <- read.table("features.txt");
-  names(activityLabels) <- c("activityid", "activityname");
   subject <- read.table("test/subject_test.txt");
   names(subject) <- c("subjectid"); 
   activity <- read.table('test/y_test.txt');
@@ -21,8 +20,8 @@ run_analysis <- function() {
   names(measurements) <- featureLabels[, c("V2")];
   train_results <- cbind(subject, activity, measurements[, regexpr("(mean|std)\\(", names(measurements)) != -1]);
   train_results <- rbind(train_results, test_results);
-  results <<- merge(activityLabels, train_results,  by.x="activityid", by.y="activity");
-  aggResult <<- aggregate( results[,4:69], results[,1:3], FUN = mean );
+  results <<- merge(activityLabels, train_results,  by.x="activityId", by.y="activity")[,2:69];
+  aggResult <<- aggregate( results[,3:68], results[,1:2], FUN = mean );
 }
 
 
